@@ -1,0 +1,54 @@
+{
+  "name": "@fe/web",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev:mobile": "pnpm --filter @fe/mobile dev",
+    "dev:pc": "pnpm --filter @fe/pc dev",
+    "build:mobile": "pnpm --filter @fe/mobile build",
+    "build:pc": "pnpm --filter @fe/pc build",
+    "lint": "eslint .",
+    "cz": "cz",
+    "prepare": "husky"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@ant-design/icons": "^5.6.1",
+    "@ant-design/v5-patch-for-react-19": "^1.0.3",
+    "@apollo/client": "^3.13.1",
+    "graphql": "^16.10.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^7.2.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.21.0",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@vitejs/plugin-react": "^4.3.4",
+    "commitizen": "^4.3.1",
+    "commitlint": "^19.7.1",
+    "commitlint-config-cz": "^0.13.3",
+    "cz-customizable": "^7.4.0",
+    "eslint": "^9.21.0",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "eslint-plugin-react-refresh": "^0.4.19",
+    "globals": "^15.15.0",
+    "husky": "^9.1.7",
+    "less": "^4.2.2",
+    "typescript": "~5.7.2",
+    "typescript-eslint": "^8.24.1",
+    "vite": "^6.2.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-customizable"
+    },
+    "cz-customizable": {
+      "config": "./cz-config.cjs"
+    }
+  }
+}

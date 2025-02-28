@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@fe/shared/*": ["../shared/src/*"],
+      "@fe/pc/*": ["../pc/src/*"]
+    }
+  },
+  "include": ["src"],
+  "extends": "../tsconfig.app.json"
+}

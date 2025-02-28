@@ -1,0 +1,18 @@
+{
+  "name": "@fe/mobile",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@fe/web": "workspace:^",
+    "@fe/shared": "workspace:*",
+    "antd-mobile": "^5.38.1"
+  },
+  "devDependencies": {}
+}
