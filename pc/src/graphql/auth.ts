@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client'
 
 /** 获取登录验证码 */
 export const GET_LOGIN_SMS_CODE = gql`
@@ -8,7 +8,7 @@ export const GET_LOGIN_SMS_CODE = gql`
       message
     }
   }
-`;
+`
 
 /** 登录 */
 export const LOGIN = gql`
@@ -21,4 +21,4 @@ export const LOGIN = gql`
       }
     }
   }
-`;
+`
