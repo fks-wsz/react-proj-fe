@@ -10,7 +10,16 @@ export const GET_USER_INFO = gql`
         name
         desc
         phoneNumber
+        avatarUrl
       }
+    }
+  }
+`
+export const UPDATE_USER_INFO = gql`
+  mutation updateUserInfo($id: String!, $params: UserInput!) {
+    updateUserInfo(id: $id, params: $params) {
+      code
+      message
     }
   }
 `

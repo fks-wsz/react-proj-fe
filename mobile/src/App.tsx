@@ -1,54 +1,54 @@
-import React, { useCallback, useState } from "react";
-import { useQuery, useMutation } from "@apollo/client";
-import { ImageUploader, Form, Input, Button } from "antd-mobile";
+import React, { useCallback, useState } from 'react'
+import { useQuery, useMutation } from '@apollo/client'
+import { ImageUploader, Form, Input, Button } from 'antd-mobile'
 
-import { useUploadOSS } from "./hooks/useUploadOSS";
-import { useMount } from "./hooks/useMount";
+import { useUploadOSS } from '@fe/shared'
+import { useMount } from '@fe/shared'
 
-import { FIND_USER, UPDATE_USER } from "./graphql/user";
+import { FIND_USER, UPDATE_USER } from './graphql/user'
 
-import "./App.css";
+import './App.css'
 
 function App() {
   useMount(() => {
-    document.documentElement.setAttribute("data-prefers-color-scheme", "dark");
-  });
-  const [name, setName] = useState("");
-  const [desc, setDesc] = useState("");
+    document.documentElement.setAttribute('data-prefers-color-scheme', 'dark')
+  })
+  const [name, setName] = useState('')
+  const [desc, setDesc] = useState('')
 
   const { loading, data } = useQuery(FIND_USER, {
-    variables: { id: "7877f6ff-3765-496f-adda-17e677e16f57" },
-  });
+    variables: { id: '7877f6ff-3765-496f-adda-17e677e16f57' },
+  })
 
-  const [mutateFn] = useMutation(UPDATE_USER);
+  const [mutateFn] = useMutation(UPDATE_USER)
 
   const handleNameInputChange = useCallback(
     (value: string) => {
-      setName(value);
+      setName(value)
     },
     [setName],
-  );
+  )
 
   const handleDescInputChange = useCallback(
     (value: string) => {
-      setDesc(value);
+      setDesc(value)
     },
     [setDesc],
-  );
+  )
 
   const handleUpdateBtnClick = useCallback(() => {
     mutateFn({
       variables: {
-        id: "7877f6ff-3765-496f-adda-17e677e16f57",
+        id: '7877f6ff-3765-496f-adda-17e677e16f57',
         params: {
           name,
           desc,
         },
       },
-    });
-  }, [mutateFn]);
+    })
+  }, [mutateFn])
 
-  const { handleUploadOSS } = useUploadOSS();
+  const { handleUploadOSS } = useUploadOSS()
 
   return (
     <>
@@ -57,25 +57,26 @@ function App() {
 
       <div>
         <Form
-          layout='horizontal'
+          layout="horizontal"
           footer={
-            <Button block type='submit' color='primary' size='large' onClick={handleUpdateBtnClick}>
+            <Button block type="submit" color="primary" size="large" onClick={handleUpdateBtnClick}>
               提交
             </Button>
-          }>
-          <Form.Item name='name' label='姓名'>
+          }
+        >
+          <Form.Item name="name" label="姓名">
             <Input value={name} onChange={handleNameInputChange}></Input>
           </Form.Item>
-          <Form.Item name='desc' label='描述'>
+          <Form.Item name="desc" label="描述">
             <Input value={desc} onChange={handleDescInputChange}></Input>
           </Form.Item>
-          <Form.Item name='avatar' label='头像'>
+          <Form.Item name="avatar" label="头像">
             <ImageUploader upload={handleUploadOSS}></ImageUploader>
           </Form.Item>
         </Form>
       </div>
     </>
-  );
+  )
 }
 
-export default App;
+export default App

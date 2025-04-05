@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client'
 
 /** 获取OSS签名 */
 export const GET_UPLOAD_OSS_SIGNATURE = gql`
@@ -7,11 +7,13 @@ export const GET_UPLOAD_OSS_SIGNATURE = gql`
       code
       message
       data {
-        expire
-        policysignature
-        host
         dir
+        host
+        expire
+        signature
+        policy
+        ossAccessKeyId
       }
     }
   }
-`;
+`

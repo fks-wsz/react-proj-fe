@@ -5,11 +5,13 @@ import { PropChild } from '@/types'
 type Store<S> = {
   key: string
   store: S
-  setStore: (store: S) => void
+  setStore:
+    | ((store: Partial<S>) => void)
+    | ((updater: (curStore: Partial<S>) => Partial<S>) => void)
 }
 
 // 上下文缓存
-const ctxCache = new Map<string, Context<any>>()
+const ctxCache = new Map<string, Context>()
 
 const getAppProvider =
   <S,>(key: string, defaultValue: S, AppContext: React.Context<Store<S>>) =>
@@ -28,7 +30,7 @@ const getAppProvider =
     return <AppContext.Provider value={value}>{children}</AppContext.Provider>
   }
 
-class Context<S> {
+class Context<S = any> {
   private readonly defaultStore: Store<S>
   readonly AppContext: React.Context<Store<S>>
   readonly AppProvider: ({ children }: PropChild) => JSX.Element

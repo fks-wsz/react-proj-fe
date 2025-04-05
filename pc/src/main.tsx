@@ -1,30 +1,34 @@
-import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 
 import { ApolloProvider } from '@apollo/client'
 import { client } from './utils/apollo'
 
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { ROUTES_CONFIG } from './routes/index.ts'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { COMMON_ROUTES_CONFIG, menuRoutes } from './routes'
 
-import '@ant-design/v5-patch-for-react-19'
-
-import Page404 from '@/containers/Page404'
+import Layout from '@/components/Layout'
 import UserInfo from '@/components/UserInfo'
 
+import './index.css'
+
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <ApolloProvider client={client}>
-      <BrowserRouter>
-        <UserInfo>
-          <Routes>
-            {ROUTES_CONFIG.map((route) => {
-              return <Route key={route.key} path={route.path} element={<route.element />} />
+  // <StrictMode>
+  <ApolloProvider client={client}>
+    <BrowserRouter>
+      <UserInfo>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Navigate to="/home" />} />
+            {menuRoutes.map((route) => {
+              return <Route key={route.path} path={route.path} element={<route.element />} />
             })}
-            <Route path="*" element={<Page404 />} />
-          </Routes>
-        </UserInfo>
-      </BrowserRouter>
-    </ApolloProvider>
-  </StrictMode>,
+          </Route>
+          {COMMON_ROUTES_CONFIG.map((route) => {
+            return <Route key={route.key} path={route.path} element={<route.element />} />
+          })}
+        </Routes>
+      </UserInfo>
+    </BrowserRouter>
+  </ApolloProvider>,
+  // </StrictMode>,
 )

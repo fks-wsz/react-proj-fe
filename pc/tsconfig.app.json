@@ -3,7 +3,8 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
-    }
+    },
+    "types": ["./vite-env.d.ts"]
   },
   "include": ["src"],
   "extends": "../tsconfig.app.json"

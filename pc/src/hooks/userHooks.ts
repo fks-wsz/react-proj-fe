@@ -3,7 +3,8 @@ import { connectFactory, useAppContext } from '@fe/shared'
 import { GET_USER_INFO } from '@/graphql/user'
 import { useQuery } from '@apollo/client'
 import { UserInfo, UserInfoStore } from '@/types'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { LOCAL_STORAGE_KEYS } from '@/constants'
 
 type ResponseUserInfo = {
   getUserInfo: {
@@ -15,14 +16,17 @@ const getInitUserInfo = (): UserInfo => {
   return {
     id: '',
     name: '',
+    desc: '',
     phoneNumber: '',
+    avatarUrl: '',
   }
 }
 
 const USER_INFO_KEY = 'userInfo'
 const DEFAULT_USER_INFO: UserInfo = getInitUserInfo()
-const DEFAULT_USER_INFO_STORE: UserInfoStore = {
+const DEFAULT_USER_INFO_STORE: Partial<UserInfoStore> = {
   userInfo: DEFAULT_USER_INFO,
+  selectOrg: JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS['SELECT_ORG']) || '{}'),
   refetch: () => {},
 }
 
@@ -32,27 +36,33 @@ export const connect = connectFactory(USER_INFO_KEY, DEFAULT_USER_INFO_STORE)
 
 export const useGetUserInfo = () => {
   const { setStore } = useUserInfoContext<UserInfoStore>()
-  const { data, refetch } = useQuery<ResponseUserInfo>(GET_USER_INFO)
+  const { data, loading, refetch } = useQuery<ResponseUserInfo>(GET_USER_INFO)
+  const location = useLocation()
+  const nav = useNavigate()
 
   useEffect(() => {
     if (typeof data === 'object') {
       const { getUserInfo } = data
       if (Reflect.ownKeys(getUserInfo).length > 0) {
         // 若用户信息存在
-        setStore({ userInfo: getUserInfo.data, refetch })
-        if (window.location.pathname === '/login') {
-          window.location.href = '/'
+        setStore((s) => ({ ...s, userInfo: getUserInfo.data, refetch }))
+        if (location.pathname === '/login') {
+          nav('/')
         }
       } else {
         // 若用户信息不存在 或 token 过期
-        if (window.location.pathname !== '/login') {
-          window.location.href = `/login?targetUrl=${window.location.pathname}`
+        if (location.pathname !== '/login') {
+          nav(`/login?targetUrl=${location.pathname}`)
         }
-        setStore({ userInfo: DEFAULT_USER_INFO, refetch })
+        setStore((s) => ({ ...s, userInfo: DEFAULT_USER_INFO, refetch }))
       }
     } else {
       // 一般为 用户信息获取失败
-      setStore({ userInfo: DEFAULT_USER_INFO, refetch })
+      setStore((s) => ({ ...s, userInfo: DEFAULT_USER_INFO, refetch }))
     }
   }, [data])
+
+  return {
+    loading,
+  }
 }

@@ -16,8 +16,9 @@ import { LOGIN, GET_LOGIN_SMS_CODE } from '@/graphql/auth'
 import styles from './index.module.less'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { USER_TOKEN_KEY } from '@/constants'
-import { useUserInfoContext } from '@/utils/userHooks'
+import { useUserInfoContext } from '@/hooks/userHooks'
 import { UserInfoStore } from '@/types'
+import { useTitle } from '@fe/shared'
 
 type LoginParams = {
   phoneNumber: string
@@ -32,6 +33,7 @@ const Login = () => {
   const { refetch: fetchLogin } = useQuery(LOGIN, { skip: true })
   const nav = useNavigate()
   const [params] = useSearchParams()
+  useTitle('登录')
 
   // 登录
   const login = useCallback(
@@ -52,7 +54,7 @@ const Login = () => {
         }
         userInfoStore.refetch()
         message.success('登录成功！')
-        nav(params.get('targetUrl') || '/')
+        nav(params.get('targetUrl') || '/home')
         return
       }
       message.error('登录失败！')

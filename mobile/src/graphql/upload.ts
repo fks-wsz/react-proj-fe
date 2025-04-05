@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client'
 
 export const GET_UPLOAD_OSS_SIGNATURE = gql`
   query getOSSSignature {
@@ -11,4 +11,4 @@ export const GET_UPLOAD_OSS_SIGNATURE = gql`
       dir
     }
   }
-`;
+`

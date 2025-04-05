@@ -9,17 +9,17 @@ module.exports = {
       2,
       'always',
       [
-        'build',
-        'ci',
-        'chore',
-        'docs',
-        'feat',
-        'fix',
-        'perf',
-        'refactor',
-        'revert',
-        'style',
-        'test',
+        '🔨build',
+        '🛠️ci',
+        '🏗️chore',
+        '📖docs',
+        '✨feat',
+        '🐛fix',
+        '🚀perf',
+        '♻️refactor',
+        '⏪revert',
+        '💄style',
+        '🧪test',
       ],
     ],
 
@@ -27,7 +27,7 @@ module.exports = {
     'type-empty': [2, 'never'],
 
     // type必须小写
-    'type-case': [2, 'always', 'lowerCase'],
+    'type-case': [0, 'always', 'lowerCase'],
 
     // scope 必须小写
     'scope-case': [2, 'always', 'lowerCase'],
@@ -35,5 +35,11 @@ module.exports = {
     // scope 不限制类型
     'scope-enum': [2, 'always', []],
     'body-max-line-length': [0, 'always', 300],
+  },
+  parserPreset: {
+    parserOpts: {
+      // 自定义解析器选项，处理带有emoji的类型
+      headerPattern: /^(\w*|.*?)(?:\((.*)\))?!?: (.*)$/,
+    },
   },
 }
