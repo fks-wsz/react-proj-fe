@@ -76,7 +76,7 @@ export const getConsumeCardColumns = ({
       title: '操作',
       valueType: 'option',
       align: 'center',
-      render: (text, record, _, action) => (
+      render: (_1, record, _2, action) => (
         <Space>
           <a
             key="edit"
